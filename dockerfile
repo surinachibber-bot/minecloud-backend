@@ -1,10 +1,20 @@
+# Use official Node image
 FROM node:20
 
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm install
-
+# Copy files
 COPY . .
 
-CMD ["npm", "run", "start"]
+# Install dependencies
+RUN yarn install
+
+# Build TypeScript
+RUN yarn build
+
+# Expose port
+EXPOSE 3000
+
+# Start the app
+CMD ["node", "build/index.js"]
